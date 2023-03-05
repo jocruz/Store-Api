@@ -15,10 +15,14 @@ Right off the bat starting with the concept of destructuring, we have the follow
 
 
 ```
-const featured = req.query.featured;
+  // Extract query parameters from the request object
+const { featured, company, name, sort, fields, numericFilters } = req.query;
+
+//This can be rewritten as below
+<!-- const featured = req.query.featured;
 const company = req.query.company;
 const name = req.query.name;
 const sort = req.query.sort;
 const fields = req.query.fields;
-const numericFilters = req.query.numericFilters;
+const numericFilters = req.query.numericFilters; -->
 ```
