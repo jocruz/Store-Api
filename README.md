@@ -9,3 +9,16 @@ The first function, ***getAllProductsStatic***, retrieves all products in the da
 The second function, ***getAllProducts***, retrieves the query parameters from the request object and creates a MongoDB query object. If the ***featured***, ***company***, and ***name*** parameters are present in the query string, they are added to the ***query object***. If the ***numericFilters*** parameter is present, the function replaces the operators in the string with their corresponding MongoDB operators and adds the filter to the query object. If the sort parameter is present, the results are sorted by the specified field(s), and if the ***fields*** parameter is present, only the specified fields are returned in the response.
 
 The reason for ***sorting the query before*** resolving it is to ensure that the results are ***sorted correctly and efficiently***.
+
+Right off the bat starting with the concept of destructuring, we have the following code
+
+
+
+```
+const featured = req.query.featured;
+const company = req.query.company;
+const name = req.query.name;
+const sort = req.query.sort;
+const fields = req.query.fields;
+const numericFilters = req.query.numericFilters;
+```
