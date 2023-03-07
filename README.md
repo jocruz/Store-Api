@@ -84,7 +84,14 @@ If the numericFilters property exists in the queryString object, the function re
 
 The function then checks if each filter's field is a valid filter option (either "price" or "rating") and updates the corresponding queryObject property with an object containing the operator key-value pair.
 
-MongooseDB Functions
+remember that the object we are interating through is this
+
+```
+    // Split the filters string by commas, and for each item...
+    // ! price-$gt-50,rating-$gte-4 remember these are the items we are iterating through
+```
+
+other Functions used
 - replace(): This method is used to replace the comparison operators in the numericFilters string with their MongoDB equivalent using the operatorMap object.
 
 - split(): This method is used to split the resulting filters string by commas, returning an array of individual filters.
@@ -92,3 +99,18 @@ MongooseDB Functions
 - forEach(): This method is used to iterate through each individual filter in the filters array and add it to the queryObject object if the filter's field is a valid option.
 
 - Number(): This function is used to convert the filter's value from a string to a number before adding it to the queryObject object.
+
+
+## if (sort)
+
+```let result = Product.find(queryObject);```
+
+ This line queries the MongoDB database using the find() method provided by the Mongoose library. Product is the Mongoose model corresponding to the products collection in the MongoDB database. queryObject is an object that holds the query parameters constructed based on the query string sent by the client. result is a Mongoose Query object that can be further modified before executing the query.
+
+```if (sort) {...}``` : This code block checks if a sort query parameter is included in the query string. If it is, it splits the parameter by comma into an array of field names and directions, joins them with a space into a string, and uses the resulting string as a parameter for the sort() method of the result object. The sort() method sorts the documents returned by the find() method according to the specified fields and directions. If the sort parameter is not included in the query string, the result object is sorted by the createdAt field in ascending order.
+
+***Something important to note here is that .sort() is a mongoosedb function and not a javascript function. So it will take the argument you put into .sort(name), name for example and it will look through the document and find the name property and go through each name property value(s) and sort them. In this case because the user might input more than one, we have to split them by comma and join them with a space. So name,-price will be name price When sorting by multiple fields in Mongoose, you would use a space instead of a comma to separate the fields. Here's an example: result = result.sort("name price"); This would sort the results by the name field first, and then by the price field.***
+
+```if (fields) {...}```: This code block checks if a fields query parameter is included in the query string. If it is, it splits the parameter by comma into an array of field names, joins them with a space into a string, and uses the resulting string as a parameter for the select() method of the result object. The select() method selects the specified fields to be included in the documents returned by the query. If the fields parameter is not included in the query string, all fields are included in the returned documents.
+
+***the .select() method is used to specify which document fields should be included or excluded from the query results.***
