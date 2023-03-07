@@ -114,3 +114,20 @@ other Functions used
 ```if (fields) {...}```: This code block checks if a fields query parameter is included in the query string. If it is, it splits the parameter by comma into an array of field names, joins them with a space into a string, and uses the resulting string as a parameter for the select() method of the result object. The select() method selects the specified fields to be included in the documents returned by the query. If the fields parameter is not included in the query string, all fields are included in the returned documents.
 
 ***the .select() method is used to specify which document fields should be included or excluded from the query results.***
+
+
+## limit and skip
+```
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  result = result.skip(skip).limit(limit);
+```
+In this code snippet, we first extract the values of page and limit from the req.query object. If they are not present in the query string, we assign default values of 1 and 10, respectively.
+
+We then calculate the number of items to skip in the result set based on the current page and limit. For example, if we are on page 3 with a limit of 10, we would skip the first 20 items (2 pages * 10 items per page) and start the result set from item 21.
+
+Finally, we chain the .skip() and .limit() functions to the result query object. The .skip() function skips the specified number of items from the beginning of the result set, while the .limit() function limits the number of items returned by the query. This effectively implements pagination on the result set, allowing us to retrieve a specific page of results with a fixed number of items per page.
+
+***skip() and limit() are both methods provided by Mongoose. skip() is used to skip a certain number of documents in the query result, while limit() is used to limit the number of documents returned in the query result.***
